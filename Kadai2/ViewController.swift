@@ -7,11 +7,26 @@
 
 import UIKit
 
-private enum AirthmaticOperations: Int {
+private enum AirthmaticOperations {
     case addition
     case subtaction
     case multiplication
     case division
+    
+    init?(selectedSegmentIndex: Int) {
+        switch selectedSegmentIndex {
+        case 0:
+            self = .addition
+        case 1:
+            self = .subtaction
+        case 2:
+            self = .multiplication
+        case 3:
+            self = .division
+        default:
+            return nil
+        }
+    }
 }
 
 final class ViewController: UIViewController {
@@ -25,11 +40,11 @@ final class ViewController: UIViewController {
     }
 
     @IBAction private func didTapButton(_ sender: UIButton) {
-        calculateResultLabel.text = calculate()
+        calculateResultLabel.text = makeResultText()
     }
 
-    private func calculate() -> String {
-        guard let airthmaticOperation = AirthmaticOperations(rawValue: airthmaticOperationsSegmentedControl.selectedSegmentIndex) else {
+    private func makeResultText() -> String {
+        guard let airthmaticOperation = AirthmaticOperations.init(selectedSegmentIndex: airthmaticOperationsSegmentedControl.selectedSegmentIndex) else {
             return "演算子を取得できませんでした"
         }
 
